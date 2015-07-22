@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ivmmanagement" default="all">
+  
+  
+  <property file="ivmmanagement.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/.bundle/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.ear"/>
+    <include name="*.apk"/>
+    <include name="*.zip"/>
+    <include name="*.swc"/>
+    <include name="*.ane"/>
+    <include name="*.egg"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.7" value="${jdk.home.1.7}/bin"/>
+  <path id="jdk.classpath.1.7">
+    <fileset dir="${jdk.home.1.7}">
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/deploy.jar"/>
+      <include name="jre/lib/javaws.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/plugin.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/sunec.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/sunmscapi.jar"/>
+      <include name="jre/lib/ext/zipfs.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.7}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.7}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.7"/>
+  
+  
+  <!-- Global Libraries -->
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module IVMManagement -->
+  
+  <dirname property="module.ivmmanagement.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.ivmmanagement" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.ivmmanagement" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.ivmmanagement" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.ivmmanagement" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="ivmmanagement.output.dir" value="${module.ivmmanagement.basedir}/out/production/IVMManagement"/>
+  <property name="ivmmanagement.testoutput.dir" value="${module.ivmmanagement.basedir}/out/test/IVMManagement"/>
+  
+  <path id="ivmmanagement.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="ivmmanagement.module.production.classpath">
+    <path refid="${module.jdk.classpath.ivmmanagement}"/>
+  </path>
+  
+  <path id="ivmmanagement.runtime.production.module.classpath">
+    <pathelement location="${ivmmanagement.output.dir}"/>
+  </path>
+  
+  <path id="ivmmanagement.module.classpath">
+    <path refid="${module.jdk.classpath.ivmmanagement}"/>
+    <pathelement location="${ivmmanagement.output.dir}"/>
+  </path>
+  
+  <path id="ivmmanagement.runtime.module.classpath">
+    <pathelement location="${ivmmanagement.testoutput.dir}"/>
+    <pathelement location="${ivmmanagement.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.ivmmanagement">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.ivmmanagement">
+    <patternset refid="excluded.from.module.ivmmanagement"/>
+  </patternset>
+  
+  <path id="ivmmanagement.module.sourcepath">
+    <dirset dir="${module.ivmmanagement.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.ivmmanagement" depends="compile.module.ivmmanagement.production,compile.module.ivmmanagement.tests" description="Compile module IVMManagement"/>
+  
+  <target name="compile.module.ivmmanagement.production" description="Compile module IVMManagement; production classes">
+    <mkdir dir="${ivmmanagement.output.dir}"/>
+    <javac destdir="${ivmmanagement.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.ivmmanagement}/javac">
+      <compilerarg line="${compiler.args.ivmmanagement}"/>
+      <bootclasspath refid="ivmmanagement.module.bootclasspath"/>
+      <classpath refid="ivmmanagement.module.production.classpath"/>
+      <src refid="ivmmanagement.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.ivmmanagement"/>
+    </javac>
+    
+    <copy todir="${ivmmanagement.output.dir}">
+      <fileset dir="${module.ivmmanagement.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.ivmmanagement.tests" depends="compile.module.ivmmanagement.production" description="compile module IVMManagement; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.ivmmanagement" description="cleanup module">
+    <delete dir="${ivmmanagement.output.dir}"/>
+    <delete dir="${ivmmanagement.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.ivmmanagement" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.ivmmanagement" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.ivmmanagement:jar" value="${basedir}/out/artifacts/IVMManagement_jar"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="temp.jar.path.IVMManagement.jar" value="${artifacts.temp.dir}/IVMManagement.jar"/>
+  </target>
+  
+  <target name="artifact.ivmmanagement:jar" depends="init.artifacts, compile.module.ivmmanagement" description="Build &#39;IVMManagement:jar&#39; artifact">
+    <property name="artifact.temp.output.ivmmanagement:jar" value="${artifacts.temp.dir}/IVMManagement_jar"/>
+    <mkdir dir="${artifact.temp.output.ivmmanagement:jar}"/>
+    <jar destfile="${temp.jar.path.IVMManagement.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset dir="${ivmmanagement.output.dir}"/>
+    </jar>
+    <copy file="${temp.jar.path.IVMManagement.jar}" tofile="${artifact.temp.output.ivmmanagement:jar}/IVMManagement.jar"/>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.ivmmanagement:jar" description="Build all artifacts">
+    <mkdir dir="${artifact.output.ivmmanagement:jar}"/>
+    <copy todir="${artifact.output.ivmmanagement:jar}">
+      <fileset dir="${artifact.temp.output.ivmmanagement:jar}"/>
+    </copy>
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>
